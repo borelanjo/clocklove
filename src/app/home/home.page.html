@@ -1,0 +1,57 @@
+<app-topbar></app-topbar>
+<ion-content>
+  <ion-card *ngFor="let specialDate of specialDates">
+    <ion-card-header color="light">
+      <ion-card-subtitle>{{specialDate.nome}}</ion-card-subtitle>
+      <ion-card-title>{{specialDate.data | momentFormat:'LLL'}}</ion-card-title>
+    </ion-card-header>
+    <ion-grid>
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{specialDate.data | momentFromNow:'years'}}</ion-label>
+              <ion-note>Anos</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{specialDate.data | momentFromNow:'months'}}</ion-label>
+              <ion-note>Meses</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{specialDate.data | momentFromNow:'days'}}</ion-label>
+              <ion-note>Dias</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{specialDate.data | momentFromNow:'hours'}}</ion-label>
+              <ion-note>Horas</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{specialDate.data | momentFromNow:'minutes'}}</ion-label>
+              <ion-note>Minutos</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{specialDate.data | momentFromNow:'seconds'}}</ion-label>
+              <ion-note>Segundos</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col class="ion-align-self-center">
+              <ion-button size="small">
+                <ion-icon name="share"></ion-icon>
+              </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+
+    </ion-grid>
+  </ion-card>
+</ion-content>
