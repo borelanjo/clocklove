@@ -1,0 +1,8 @@
+{
+  "appId": "com.borelanjo.clocklove",
+  "appName": "Clock Love",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}
