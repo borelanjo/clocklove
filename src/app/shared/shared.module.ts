@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { IonicStorageModule } from '@ionic/storage';
 
 
 
@@ -14,14 +14,17 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     IonicModule,
     FormsModule,
     CoreModule,
-    NgxDatatableModule
+    IonicStorageModule.forRoot({
+      name: '__clocklovedb',
+driverOrder: ['indexeddb', 'sqlite', 'websql']
+    })
   ],
   exports: [
     CommonModule,
     IonicModule,
     FormsModule,
     CoreModule,
-    NgxDatatableModule
+    IonicStorageModule
   ]
 })
 export class SharedModule { }

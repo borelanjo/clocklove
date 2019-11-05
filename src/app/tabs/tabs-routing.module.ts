@@ -8,25 +8,25 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'home',
+        path: 'memorable-time',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../home/home.module').then(m => m.HomePageModule)
+              import('../memorable-time/memorable-time.module').then(m => m.MemorableTimePageModule)
           }
         ]
       },
       {
         path: '',
-        redirectTo: '/tabs/home',
+        redirectTo: '/tabs/memorable-time',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/home',
+    redirectTo: '/tabs/memorable-time',
     pathMatch: 'full'
   }
 ];

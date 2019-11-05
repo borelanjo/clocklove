@@ -1,23 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-
-import { HomePage } from './home.page';
+import { MemorableTimePage } from './memorable-time.page';
 import { SharedModule } from '../shared/shared.module';
-import { CoreModule } from '../core/core.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomePage
+    component: MemorableTimePage
   }
 ];
 
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
-  declarations: [HomePage]
+  declarations: [MemorableTimePage]
 })
-export class HomePageModule {}
+export class MemorableTimePageModule {}
