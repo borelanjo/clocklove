@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MemorableTimePage } from './memorable-time.page';
+import { MemorableTimeListingPage } from './memorable-time-listing.page';
 
-describe('MemorableTimePage', () => {
-  let component: MemorableTimePage;
-  let fixture: ComponentFixture<MemorableTimePage>;
+describe('MemorableTimeListingPage', () => {
+  let component: MemorableTimeListingPage;
+  let fixture: ComponentFixture<MemorableTimeListingPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MemorableTimePage ],
+      declarations: [ MemorableTimeListingPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MemorableTimePage);
+    fixture = TestBed.createComponent(MemorableTimeListingPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

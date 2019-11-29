@@ -13,7 +13,7 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../memorable-time/memorable-time.module').then(m => m.MemorableTimePageModule)
+              import('../memorable-time/memorable-time-listing/memorable-time-listing.module').then(m => m.MemorableTimeListingPageModule)
           }
         ]
       },

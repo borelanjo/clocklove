@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Plugins } from '@capacitor/core';
-import { MomentFromNowPipe } from '../core/shared/pipe/moment-from-now.pipe';
-import { MemorableTime } from './shared/memorable-time.model';
-import { MemorableTimeService } from './shared/memorable-time.service';
-
-const { Share } = Plugins;
+import { MemorableTimeService } from '../shared/memorable-time.service';
+import { MemorableTime } from '../shared/memorable-time.model';
+import { Share } from '@capacitor/core';
+import { MomentFromNowPipe } from 'src/app/core/shared/pipe/moment-from-now.pipe';
 
 @Component({
-  selector: 'app-memorable-time',
-  templateUrl: './memorable-time.page.html',
-  styleUrls: ['./memorable-time.page.scss'],
-  providers: [MemorableTimeService]
+  selector: 'app-memorable-time-listing',
+  templateUrl: './memorable-time-listing.page.html',
+  styleUrls: ['./memorable-time-listing.page.scss'],
 })
-export class MemorableTimePage implements OnInit {
+export class MemorableTimeListingPage implements OnInit {
 
   constructor(private memorableTimeService: MemorableTimeService) { }
 

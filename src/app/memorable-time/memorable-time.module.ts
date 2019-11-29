@@ -1,21 +1,17 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { MemorableTimeListingPageModule } from './memorable-time-listing/memorable-time-listing.module';
+import { MemorableTimeRegistrationPageModule } from './memorable-time-registration/memorable-time-registration.module';
+import { MemorableTimeRoutingModule } from './memorable-time-routing.module';
+import { MemorableTimeComponent } from './memorable-time.component';
 
-import { MemorableTimePage } from './memorable-time.page';
-import { SharedModule } from '../shared/shared.module';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: MemorableTimePage
-  }
-];
 
 @NgModule({
+  declarations: [MemorableTimeComponent],
   imports: [
-    SharedModule,
-    RouterModule.forChild(routes),
-  ],
-  declarations: [MemorableTimePage]
+    MemorableTimeListingPageModule,
+    MemorableTimeRegistrationPageModule,
+    MemorableTimeRoutingModule
+  ]
 })
-export class MemorableTimePageModule {}
+export class MemorableTimeModule { }
