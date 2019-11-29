@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Clock Love</ion-title>
+      <ion-buttons slot="start" *ngIf="backLink">
+          <ion-back-button [defaultHref]="backLink"></ion-back-button>
+        </ion-buttons>
+    <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
