@@ -7,7 +7,7 @@ import * as moment from 'moment';
 export class MomentFormatPipe implements PipeTransform {
 
   transform(date: moment.MomentInput, format: string) {
-    moment.locale('pt-Br')
+    moment.locale('pt-Br');
     return moment(date).format(format);
   }
 
