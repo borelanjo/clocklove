@@ -11,11 +11,6 @@ export class MemorableTimeService {
 
   constructor(private storage: Storage) {
 
-    this.list().then(mlist => {
-      const memorableTimes: MemorableTime[] = [];
-      this.storage.set(this.baseName, memorableTimes);
-    });
-
   }
 
   public save(memorableTime: MemorableTime): MemorableTime {
@@ -32,6 +27,14 @@ export class MemorableTimeService {
   public saveAll(memorableTimes: MemorableTime[]): MemorableTime[] {
     this.storage.set(this.baseName, memorableTimes);
     return memorableTimes;
+  }
+
+  public delete(memorableTime: MemorableTime) {
+    this.list().then(itens => {
+      itens = itens.filter(item => item !== memorableTime);
+      this.saveAll(itens);
+    });
+
   }
 
   public list(): Promise<MemorableTime[]> {

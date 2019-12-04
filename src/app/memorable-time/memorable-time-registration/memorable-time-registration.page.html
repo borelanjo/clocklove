@@ -1,10 +1,103 @@
-<app-topbar title="Cadastrar Momento" backLink="tabs/memorable-time"></app-topbar>
+<app-topbar title="Cadastrar Momento" backLink="tabs/memorable-time" (save)="create()" showSave="true">
+</app-topbar>
 
 <ion-content>
 
-    <ion-list>
-        <ion-list-header (click)="addMemorableTime()">Interface Options</ion-list-header>
-      
-      </ion-list>
+  <form class="form form-memorable-time-new" [formGroup]="form" autocomplete="off" [class.submitted]="formSubmitted"
+    (ngSubmit)="create()">
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Informação</ion-label>
+      </ion-item-divider>
+    <ion-item>
+      <ion-label for="description" position="floating">Descrição</ion-label>
+      <ion-input id="description" formControlName="description" placeholder="Meu nascimento"></ion-input>
+    </ion-item>
+    <app-validation-message [control]="form.get('description')" [submitted]="formSubmitted" mode="submitted">
+    </app-validation-message>
+
+    <ion-item>
+      <ion-label for="action" position="floating">Complemento</ion-label>
+      <ion-input id="action" formControlName="action" placeholder="foi há"></ion-input>
+    </ion-item>
+    <app-validation-message [control]="form.get('action')" [submitted]="formSubmitted" mode="submitted">
+    </app-validation-message>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Data do acontecimento</ion-label>
+      </ion-item-divider>
+    <ion-item>
+      <ion-label for="date" position="floating">Data</ion-label>
+      <ion-datetime displayFormat="DD/MM/YY" formControlName="date"
+      cancel-text="cancelar" done-text="ok">
+    </ion-datetime>
+    </ion-item>
+    <app-validation-message [control]="form.get('date')" [submitted]="formSubmitted" mode="submitted">
+    </app-validation-message>
+
+    <ion-item>
+      <ion-label for="date" position="floating">Horário</ion-label>
+      <ion-datetime displayFormat="HH:mm" formControlName="date"
+      cancel-text="cancelar" done-text="ok">
+    </ion-datetime>
+    </ion-item>
+    <app-validation-message [control]="form.get('date')" [submitted]="formSubmitted" mode="submitted">
+    </app-validation-message>
+    </ion-item-group>
+
+  </form>
+
+  <ion-item-divider *ngIf="!form.invalid">
+    <ion-label>
+      {{sharePreview()}}
+    </ion-label>
+  </ion-item-divider>
+
+  <ion-card *ngIf="!form.invalid">
+    <ion-card-header color="light">
+      <ion-card-subtitle>{{form.get('description').value}}</ion-card-subtitle>
+      <ion-card-title>{{form.get('date').value | momentFormat:'LLL'}}</ion-card-title>
+    </ion-card-header>
+    <ion-grid>
+      <ion-card-content>
+        <ion-row color="secondary">
+          <ion-col>
+            <ion-item>
+              <ion-label>{{form.get('date').value | momentFromNow:'years'}}</ion-label>
+              <ion-note>Anos</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{form.get('date').value | momentFromNow:'months'}}</ion-label>
+              <ion-note>Meses</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{form.get('date').value | momentFromNow:'days'}}</ion-label>
+              <ion-note>Dias</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{form.get('date').value | momentFromNow:'hours'}}</ion-label>
+              <ion-note>Horas</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{form.get('date').value | momentFromNow:'minutes'}}</ion-label>
+              <ion-note>Minutos</ion-note>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+
+    </ion-grid>
+  </ion-card>
 
 </ion-content>
