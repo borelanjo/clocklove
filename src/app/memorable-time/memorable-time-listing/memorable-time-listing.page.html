@@ -1,7 +1,7 @@
-<app-topbar></app-topbar>
+<app-topbar [showDelete]="memorableSelected" (delete)="delete()"></app-topbar>
 <ion-content>
   <ion-card *ngFor="let memorableTime of memorableTimes">
-    <ion-card-header color="light">
+    <ion-card-header [color]="cardColor(memorableTime)" (click)="onSelect(memorableTime)">
       <ion-card-subtitle>{{memorableTime.description}}</ion-card-subtitle>
       <ion-card-title>{{memorableTime.date | momentFormat:'LLL'}}</ion-card-title>
     </ion-card-header>
@@ -43,11 +43,61 @@
               <ion-icon name="share"></ion-icon>
             </ion-button>
           </ion-col>
+          <ion-reorder slot="end"></ion-reorder>
         </ion-row>
       </ion-card-content>
 
     </ion-grid>
   </ion-card>
+  <ion-card *ngIf="!memorableTimes">
+      <ion-card-header color="light">
+        <ion-card-subtitle>Abertura do App</ion-card-subtitle>
+        <ion-card-title>{{now | momentFormat:'LLL'}}</ion-card-title>
+      </ion-card-header>
+      <ion-grid>
+        <ion-card-content>
+          <ion-row color="secondary">
+            <ion-col>
+              <ion-item>
+                <ion-label>{{now | momentFromNow:'years'}}</ion-label>
+                <ion-note>Anos</ion-note>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>{{now | momentFromNow:'months'}}</ion-label>
+                <ion-note>Meses</ion-note>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>{{now | momentFromNow:'days'}}</ion-label>
+                <ion-note>Dias</ion-note>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>{{now | momentFromNow:'hours'}}</ion-label>
+                <ion-note>Horas</ion-note>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>{{now | momentFromNow:'minutes'}}</ion-label>
+                <ion-note>Minutos</ion-note>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                  <ion-label>{{now | momentFromNow:'seconds'}}</ion-label>
+                  <ion-note>Segundos</ion-note>
+                </ion-item>
+              </ion-col>
+          </ion-row>
+        </ion-card-content>
+  
+      </ion-grid>
+    </ion-card>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button href="memorable-time/new" color="secondary">
       <ion-icon name="add"></ion-icon>

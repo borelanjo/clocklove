@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MemorableTimeService } from '../shared/memorable-time.service';
 import { MemorableTime } from '../shared/memorable-time.model';
 import { Share } from '@capacitor/core';
@@ -11,24 +11,58 @@ import { MomentFromNowPipe } from 'src/app/core/shared/pipe/moment-from-now.pipe
 })
 export class MemorableTimeListingPage implements OnInit {
 
-  constructor(private memorableTimeService: MemorableTimeService) { }
+  constructor(private memorableTimeService: MemorableTimeService, private cdr: ChangeDetectorRef) { }
 
   public memorableTimes: MemorableTime[];
+  public now = new Date();
+  public memorableSelected: MemorableTime;
 
   ngOnInit() {
-    this.memorableTimeService.list().then(memorableTimes => {
-      this.memorableTimes = memorableTimes;
-      console.log(memorableTimes);
-    });
-    setInterval(() => {
-      this.refresh();
-    }, 15000);
+    this.fillList();
+    this.refresh();
+
   }
-  refresh() {
+
+  onSelect(memorableTime: MemorableTime){
+    if (memorableTime === this.memorableSelected) {
+      this.memorableSelected = null;
+      return;
+    }
+
+    this.memorableSelected = memorableTime;
+  }
+
+  delete() {
+    console.log(this.memorableSelected);
+    this.memorableTimes = this.memorableTimes.filter(item => item !== this.memorableSelected);
+    this.memorableTimeService.saveAll(this.memorableTimes);
+    this.memorableSelected = null;
+  }
+
+  cardColor(memorableTime: MemorableTime): string{
+    if (memorableTime === this.memorableSelected) {
+      return 'secondary';
+    }
+    return 'light';
+  }
+
+  fillList() {
     this.memorableTimeService.list().then(memorableTimes => {
       this.memorableTimes = memorableTimes;
-      console.log(memorableTimes);
+      this.now = new Date(this.now);
     });
+  }
+
+  refresh() {
+    const now = new Date();
+    const initialDelay = 60 * 1000 - (now.getSeconds() * 1000 + now.getMilliseconds());
+    setInterval(() => {
+      this.cdr.detectChanges();
+      this.memorableTimes.forEach(mt => {
+        mt.date = new Date(mt.date);
+      });
+    }, initialDelay);
+
   }
 
   async share(memorableTime: MemorableTime) {
@@ -40,42 +74,11 @@ export class MemorableTimeListingPage implements OnInit {
       title: memorableTime.description,
       text: body,
       dialogTitle: 'Momentos Memoráveis'
+    }).then(res => {
+      console.log(res);
+    }).catch(e => {
+      console.log(e);
     });
-  }
-
-  public addMemorableTime() {
-    this.memorableTimeService.saveAll([
-      new MemorableTime().deserialize({
-        description: 'Meu namoro com Camily',
-        date: new Date('2014-01-25 18:00:00'),
-        action: 'começou há'
-      }),
-      new MemorableTime().deserialize({
-        description: 'Meu casamento civil com Camily',
-        date: new Date('2019-01-24 14:00:00'),
-        action: 'começou há'
-      }),
-      new MemorableTime().deserialize({
-        description: 'Meu casamento religioso com Camily',
-        date: new Date('2019-01-26 20:00:00'),
-        action: 'começou há'
-      }),
-      new MemorableTime().deserialize({
-        description: 'Meu nascimento',
-        date: new Date('1991-06-18 23:15:00'),
-        action: 'foi há'
-      }),
-      new MemorableTime().deserialize({
-        description: 'Virei bacharel em Sistemas de Informação',
-        date: new Date('2013-06-27 00:00:00'),
-        action: 'exatamente há'
-      }),
-      new MemorableTime().deserialize({
-        description: 'Meu batismo',
-        date: new Date('2019-05-26 00:00:00'),
-        action: 'exatamente há'
-      }),
-    ]);
   }
 
   private messageDuration(date: any) {
