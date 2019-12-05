@@ -1,7 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Plugins } from '@capacitor/core';
+const { Share } = Plugins;
+
 import { MemorableTimeService } from '../shared/memorable-time.service';
 import { MemorableTime } from '../shared/memorable-time.model';
-import { Share } from '@capacitor/core';
+
 import { MomentFromNowPipe } from 'src/app/core/shared/pipe/moment-from-now.pipe';
 
 @Component({
@@ -11,7 +14,7 @@ import { MomentFromNowPipe } from 'src/app/core/shared/pipe/moment-from-now.pipe
 })
 export class MemorableTimeListingPage implements OnInit {
 
-  constructor(private memorableTimeService: MemorableTimeService, private cdr: ChangeDetectorRef) { }
+  constructor(private memorableTimeService: MemorableTimeService) { }
 
   public memorableTimes: MemorableTime[];
   public now = new Date();
@@ -20,6 +23,13 @@ export class MemorableTimeListingPage implements OnInit {
   ngOnInit() {
     this.fillList();
     this.refresh();
+  }
+
+  doReorder(ev: any) {
+    this.memorableTimes = ev.detail.complete(this.memorableTimes);
+
+    this.memorableTimeService.saveAll(this.memorableTimes).then((response) => {
+    });
 
   }
 
@@ -33,10 +43,10 @@ export class MemorableTimeListingPage implements OnInit {
   }
 
   delete() {
-    console.log(this.memorableSelected);
-    this.memorableTimes = this.memorableTimes.filter(item => item !== this.memorableSelected);
-    this.memorableTimeService.saveAll(this.memorableTimes);
-    this.memorableSelected = null;
+    this.memorableTimeService.delete(this.memorableTimes, this.memorableSelected).then(m =>{
+      this.memorableTimes = m;
+      this.memorableSelected = null;
+    });
   }
 
   cardColor(memorableTime: MemorableTime): string{
@@ -57,7 +67,6 @@ export class MemorableTimeListingPage implements OnInit {
     const now = new Date();
     const initialDelay = 60 * 1000 - (now.getSeconds() * 1000 + now.getMilliseconds());
     setInterval(() => {
-      this.cdr.detectChanges();
       this.memorableTimes.forEach(mt => {
         mt.date = new Date(mt.date);
       });
@@ -77,7 +86,7 @@ export class MemorableTimeListingPage implements OnInit {
     }).then(res => {
       console.log(res);
     }).catch(e => {
-      console.log(e);
+      console.error(e);
     });
   }
 

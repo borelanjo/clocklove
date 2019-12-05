@@ -13,27 +13,28 @@ export class MemorableTimeService {
 
   }
 
-  public save(memorableTime: MemorableTime): MemorableTime {
-    this.list().then((memorableTimes: MemorableTime[]) => {
+  public async save(memorableTime: MemorableTime): Promise<MemorableTime> {
+    return this.list().then((memorableTimes: MemorableTime[]) => {
       if (!memorableTimes) {
         memorableTimes = this.initList();
       }
       memorableTimes.push(memorableTime);
       this.storage.set(this.baseName, memorableTimes);
+      return memorableTime;
     });
-    return memorableTime;
   }
 
-  public saveAll(memorableTimes: MemorableTime[]): MemorableTime[] {
-    this.storage.set(this.baseName, memorableTimes);
-    return memorableTimes;
+  public saveAll(memorableTimes: MemorableTime[]): Promise<MemorableTime[]> {
+    return this.storage.set(this.baseName, memorableTimes).then(() => {
+
+      return memorableTimes;
+    });
   }
 
-  public delete(memorableTime: MemorableTime) {
-    this.list().then(itens => {
-      itens = itens.filter(item => item !== memorableTime);
-      this.saveAll(itens);
-    });
+  public delete(memorableTimes: MemorableTime[], toDelete: MemorableTime): Promise<MemorableTime[]> {
+
+    memorableTimes = memorableTimes.filter(item => item !== toDelete);
+    return this.saveAll(memorableTimes);
 
   }
 

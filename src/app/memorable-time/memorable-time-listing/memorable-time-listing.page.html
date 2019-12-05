@@ -1,7 +1,8 @@
 <app-topbar [showDelete]="memorableSelected" (delete)="delete()"></app-topbar>
 <ion-content>
-  <ion-card *ngFor="let memorableTime of memorableTimes">
-    <ion-card-header [color]="cardColor(memorableTime)" (click)="onSelect(memorableTime)">
+    <ion-reorder-group [disabled]="!memorableSelected" (ionItemReorder)="doReorder($event)">
+  <ion-card *ngFor="let memorableTime of memorableTimes" appLongPress (onLongPress)="onSelect(memorableTime)">
+    <ion-card-header [color]="cardColor(memorableTime)">
       <ion-card-subtitle>{{memorableTime.description}}</ion-card-subtitle>
       <ion-card-title>{{memorableTime.date | momentFormat:'LLL'}}</ion-card-title>
     </ion-card-header>
@@ -43,12 +44,13 @@
               <ion-icon name="share"></ion-icon>
             </ion-button>
           </ion-col>
-          <ion-reorder slot="end"></ion-reorder>
         </ion-row>
       </ion-card-content>
-
+      
     </ion-grid>
+    <ion-reorder slot="end"></ion-reorder>
   </ion-card>
+  </ion-reorder-group>
   <ion-card *ngIf="!memorableTimes">
       <ion-card-header color="light">
         <ion-card-subtitle>Abertura do App</ion-card-subtitle>
