@@ -31,7 +31,7 @@
       </ion-item-divider>
     <ion-item>
       <ion-label for="date" position="floating">Data</ion-label>
-      <ion-datetime displayFormat="DD/MM/YY" formControlName="date"
+      <ion-datetime displayFormat="DD/MM/YY" formControlName="date" [max]="today"
       cancel-text="cancelar" done-text="ok">
     </ion-datetime>
     </ion-item>
@@ -40,7 +40,7 @@
 
     <ion-item>
       <ion-label for="date" position="floating">Horário</ion-label>
-      <ion-datetime displayFormat="HH:mm" formControlName="date"
+      <ion-datetime displayFormat="HH:mm" formControlName="time"
       cancel-text="cancelar" done-text="ok">
     </ion-datetime>
     </ion-item>

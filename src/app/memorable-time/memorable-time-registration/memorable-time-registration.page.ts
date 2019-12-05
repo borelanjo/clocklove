@@ -4,6 +4,7 @@ import { MemorableTime } from '../shared/memorable-time.model';
 import { MemorableTimeForm } from '../shared/memorable-time.form';
 import { MomentFromNowPipe } from 'src/app/core/shared/pipe/moment-from-now.pipe';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-memorable-time-registration',
@@ -16,9 +17,14 @@ export class MemorableTimeRegistrationPage implements OnInit {
   private _formSubmitted = false;
   private _loading = false;
 
+  public today = moment().format('YYYY-MM-DDTHH:mm:ss');
+  public datePickerOptions: any;
+  public timePickerOptions: any;
+
   constructor(
     private memorableTimeService: MemorableTimeService,
-    private router: Router) { }
+    private router: Router) {
+  }
 
   ngOnInit() {
   }
@@ -36,7 +42,8 @@ export class MemorableTimeRegistrationPage implements OnInit {
   }
 
   public sharePreview(): string {
-    const duration = this.messageDuration(this._form.get('date').value);
+    const dateTime = moment(moment(this._form.get('date').value).format('YYYY-MM-DD') + ' ' + moment(this._form.get('time').value).format('HH:mm')).toDate();
+    const duration = this.messageDuration(dateTime);
     const body = `${this._form.get('description').value} ${this._form.get('action').value} ${duration}`;
 
     return body;
@@ -55,7 +62,6 @@ export class MemorableTimeRegistrationPage implements OnInit {
 
   public create() {
     this._formSubmitted = true;
-    console.log('criando');
 
     if (this._form.invalid) {
       return;
@@ -65,9 +71,10 @@ export class MemorableTimeRegistrationPage implements OnInit {
 
     const memorable = new MemorableTime().deserializeFromForm(this._form);
 
-    this.memorableTimeService.save(memorable);
-    this._loading = false;
-    this.router.navigate(['tabs/memorable-time']);
+    this.memorableTimeService.save(memorable).then(() => {
+      this._loading = false;
+      this.router.navigate(['tabs/memorable-time']);
+    });
   }
 
 }
