@@ -21,8 +21,9 @@ export class MemorableTimeListingPage implements OnInit {
   public memorableSelected: MemorableTime;
 
   ngOnInit() {
-    this.fillList();
-    this.refresh();
+    this.fillList().then(() => {
+      this.refresh();
+    });
   }
 
   doReorder(ev: any) {
@@ -56,16 +57,17 @@ export class MemorableTimeListingPage implements OnInit {
     return 'light';
   }
 
-  fillList() {
-    this.memorableTimeService.list().then(memorableTimes => {
+  async fillList(): Promise<MemorableTime[]> {
+    return this.memorableTimeService.list().then(memorableTimes => {
       this.memorableTimes = memorableTimes;
       this.now = new Date(this.now);
+      return this.memorableTimes;
     });
   }
 
   refresh() {
     const now = new Date();
-    const initialDelay = 60 * 1000 - (now.getSeconds() * 1000 + now.getMilliseconds());
+    const initialDelay = 1 * 1000 - (now.getSeconds() * 1000 + now.getMilliseconds());
     setInterval(() => {
       this.memorableTimes.forEach(mt => {
         mt.date = new Date(mt.date);
@@ -74,13 +76,13 @@ export class MemorableTimeListingPage implements OnInit {
 
   }
 
-  async share(memorableTime: MemorableTime) {
-    const duration = this.messageDuration(memorableTime.date);
-    const body = `${memorableTime.description} ${memorableTime.action} ${duration}`;
+  async share() {
+    const fromNow = new MomentFromNowPipe();
+    const body = `${this.memorableSelected.description} ${this.memorableSelected.action} ${fromNow.transform(this.memorableSelected.date, 'message')}`;
     console.log(body);
 
     await Share.share({
-      title: memorableTime.description,
+      title: this.memorableSelected.description,
       text: body,
       dialogTitle: 'Momentos Memoráveis'
     }).then(res => {
@@ -88,17 +90,6 @@ export class MemorableTimeListingPage implements OnInit {
     }).catch(e => {
       console.error(e);
     });
-  }
-
-  private messageDuration(date: any) {
-    const fromNow = new MomentFromNowPipe();
-    const years = fromNow.transform(date, 'years');
-    const months = fromNow.transform(date, 'months');
-    const days = fromNow.transform(date, 'days');
-    const hours = fromNow.transform(date, 'hours');
-    const minutes = fromNow.transform(date, 'minutes');
-    const seconds = fromNow.transform(date, 'seconds');
-    return `${years} anos, ${months} meses, ${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos.`;
   }
 
 }

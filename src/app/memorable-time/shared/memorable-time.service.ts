@@ -19,6 +19,10 @@ export class MemorableTimeService {
         memorableTimes = this.initList();
       }
       memorableTimes.push(memorableTime);
+
+      memorableTimes.sort((m1, m2) => {
+        return m1.date > m2.date ? -1 : 1;
+      });
       this.storage.set(this.baseName, memorableTimes);
       return memorableTime;
     });

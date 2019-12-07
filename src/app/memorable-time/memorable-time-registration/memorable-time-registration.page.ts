@@ -17,9 +17,12 @@ export class MemorableTimeRegistrationPage implements OnInit {
   private _formSubmitted = false;
   private _loading = false;
 
+  public preview: MemorableTime;
+
   public today = moment().format('YYYY-MM-DDTHH:mm:ss');
   public datePickerOptions: any;
   public timePickerOptions: any;
+  public dateTime: Date;
 
   constructor(
     private memorableTimeService: MemorableTimeService,
@@ -42,22 +45,13 @@ export class MemorableTimeRegistrationPage implements OnInit {
   }
 
   public sharePreview(): string {
-    const dateTime = moment(moment(this._form.get('date').value).format('YYYY-MM-DD') + ' ' + moment(this._form.get('time').value).format('HH:mm')).toDate();
-    const duration = this.messageDuration(dateTime);
-    const body = `${this._form.get('description').value} ${this._form.get('action').value} ${duration}`;
+    this.dateTime = moment(moment(this._form.get('date').value).format('YYYY-MM-DD') + ' ' + moment(this._form.get('time').value).format('HH:mm')).toDate();
+    const fromNow = new MomentFromNowPipe();
+    const body = `${this._form.get('description').value} ${this._form.get('action').value} ${fromNow.transform(this.dateTime, 'message')}`;
+
+    this.preview = new MemorableTime().deserializeFromForm(this._form);
 
     return body;
-  }
-
-  private messageDuration(date: any) {
-    const fromNow = new MomentFromNowPipe();
-    const years = fromNow.transform(date, 'years');
-    const months = fromNow.transform(date, 'months');
-    const days = fromNow.transform(date, 'days');
-    const hours = fromNow.transform(date, 'hours');
-    const minutes = fromNow.transform(date, 'minutes');
-    const seconds = fromNow.transform(date, 'seconds');
-    return `${years} anos, ${months} meses, ${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos.`;
   }
 
   public create() {
@@ -70,6 +64,8 @@ export class MemorableTimeRegistrationPage implements OnInit {
     this._loading = true;
 
     const memorable = new MemorableTime().deserializeFromForm(this._form);
+
+    memorable.date = this.dateTime;
 
     this.memorableTimeService.save(memorable).then(() => {
       this._loading = false;

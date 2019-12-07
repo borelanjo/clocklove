@@ -1,105 +1,21 @@
-<app-topbar [showDelete]="memorableSelected" (delete)="delete()"></app-topbar>
+<app-topbar [showDelete]="memorableSelected" [showShare]="memorableSelected" (delete)="delete()" (share)="share()">
+</app-topbar>
 <ion-content>
-    <ion-reorder-group [disabled]="!memorableSelected" (ionItemReorder)="doReorder($event)">
-  <ion-card *ngFor="let memorableTime of memorableTimes" appLongPress (onLongPress)="onSelect(memorableTime)">
-    <ion-card-header [color]="cardColor(memorableTime)">
-      <ion-card-subtitle>{{memorableTime.description}}</ion-card-subtitle>
-      <ion-card-title>{{memorableTime.date | momentFormat:'LLL'}}</ion-card-title>
-    </ion-card-header>
-    <ion-grid>
-      <ion-card-content>
-        <ion-row color="secondary">
-          <ion-col>
-            <ion-item>
-              <ion-label>{{memorableTime.date | momentFromNow:'years'}}</ion-label>
-              <ion-note>Anos</ion-note>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label>{{memorableTime.date | momentFromNow:'months'}}</ion-label>
-              <ion-note>Meses</ion-note>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label>{{memorableTime.date | momentFromNow:'days'}}</ion-label>
-              <ion-note>Dias</ion-note>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label>{{memorableTime.date | momentFromNow:'hours'}}</ion-label>
-              <ion-note>Horas</ion-note>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label>{{memorableTime.date | momentFromNow:'minutes'}}</ion-label>
-              <ion-note>Minutos</ion-note>
-            </ion-item>
-          </ion-col>
-          <ion-col class="ion-align-self-center">
-            <ion-button size="small" (click)="share(memorableTime)">
-              <ion-icon name="share"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
-      
-    </ion-grid>
-    <ion-reorder slot="end"></ion-reorder>
-  </ion-card>
-  </ion-reorder-group>
-  <ion-card *ngIf="!memorableTimes">
-      <ion-card-header color="light">
-        <ion-card-subtitle>Abertura do App</ion-card-subtitle>
-        <ion-card-title>{{now | momentFormat:'LLL'}}</ion-card-title>
-      </ion-card-header>
-      <ion-grid>
-        <ion-card-content>
-          <ion-row color="secondary">
-            <ion-col>
-              <ion-item>
-                <ion-label>{{now | momentFromNow:'years'}}</ion-label>
-                <ion-note>Anos</ion-note>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item>
-                <ion-label>{{now | momentFromNow:'months'}}</ion-label>
-                <ion-note>Meses</ion-note>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item>
-                <ion-label>{{now | momentFromNow:'days'}}</ion-label>
-                <ion-note>Dias</ion-note>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item>
-                <ion-label>{{now | momentFromNow:'hours'}}</ion-label>
-                <ion-note>Horas</ion-note>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item>
-                <ion-label>{{now | momentFromNow:'minutes'}}</ion-label>
-                <ion-note>Minutos</ion-note>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-                <ion-item>
-                  <ion-label>{{now | momentFromNow:'seconds'}}</ion-label>
-                  <ion-note>Segundos</ion-note>
-                </ion-item>
-              </ion-col>
-          </ion-row>
-        </ion-card-content>
-  
-      </ion-grid>
-    </ion-card>
+  <app-memorable-card *ngFor="let memorableTime of memorableTimes" [headerColor]="cardColor(memorableTime)"
+    (hold)="onSelect(memorableTime)" (share)="share(memorableTime)" [memorableTime]="memorableTime">
+
+  </app-memorable-card>
+  <ion-grid *ngIf="memorableTimes && !memorableTimes.length">
+    <ion-row>
+      <ion-col class="ion-float-left ion-padding-vertical">
+        <ion-text>
+          Para começar a visualizar os seus momentos memoráveis, toque em <ion-icon name="add"></ion-icon> na
+          parte inferior da tela.
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button href="memorable-time/new" color="secondary">
       <ion-icon name="add"></ion-icon>

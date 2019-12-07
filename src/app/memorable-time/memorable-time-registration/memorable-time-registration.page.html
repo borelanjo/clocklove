@@ -7,34 +7,43 @@
     (ngSubmit)="create()">
 
     <ion-item-group>
-      <ion-item-divider>
-        <ion-label>Informação</ion-label>
+      <ion-item-divider color="secondary">
+        <ion-label>Acontecimento</ion-label>
       </ion-item-divider>
     <ion-item>
-      <ion-label for="description" position="floating">Descrição</ion-label>
-      <ion-input id="description" formControlName="description" placeholder="Meu nascimento"></ion-input>
+      <ion-label for="description" position="floating">Foi memorável</ion-label>
+      <ion-input id="description" formControlName="description" placeholder="Nascimento"></ion-input>
     </ion-item>
     <app-validation-message [control]="form.get('description')" [submitted]="formSubmitted" mode="submitted">
     </app-validation-message>
 
     <ion-item>
-      <ion-label for="action" position="floating">Complemento</ion-label>
-      <ion-input id="action" formControlName="action" placeholder="foi há"></ion-input>
+      <ion-label for="action" position="floating">detalhe</ion-label>
+      <ion-input id="action" formControlName="action" placeholder="Meu nascimento foi há"></ion-input>
     </ion-item>
     <app-validation-message [control]="form.get('action')" [submitted]="formSubmitted" mode="submitted">
     </app-validation-message>
     </ion-item-group>
 
     <ion-item-group>
-      <ion-item-divider>
-        <ion-label>Data do acontecimento</ion-label>
+      <ion-item-divider color="secondary">
+        <ion-label>Quando</ion-label>
       </ion-item-divider>
-    <ion-item>
+      <ion-item (click)="form.get('historical').value = !form.get('historical').value">
+        <ion-label>Antes de 1800?</ion-label>
+        <ion-toggle color="primary" [checked]="form.get('historical').value"></ion-toggle>
+      </ion-item>
+    <ion-item *ngIf="!form.get('historical').value">
       <ion-label for="date" position="floating">Data</ion-label>
-      <ion-datetime displayFormat="DD/MM/YY" formControlName="date" [max]="today"
+      <ion-datetime displayFormat="DD/MM/YYYY" formControlName="date" [max]="today" min="1800"
       cancel-text="cancelar" done-text="ok">
     </ion-datetime>
     </ion-item>
+    <ion-item *ngIf="form.get('historical').value">
+        <ion-label for="date" position="stacked">Data</ion-label>
+        <ion-input type="date" formControlName="date" placeholder="dd/mm/yyyy" max="{{'1799-12-31' | date:'yyyy-MM-dd'}}"></ion-input>
+      </ion-item>
+
     <app-validation-message [control]="form.get('date')" [submitted]="formSubmitted" mode="submitted">
     </app-validation-message>
 
@@ -44,7 +53,7 @@
       cancel-text="cancelar" done-text="ok">
     </ion-datetime>
     </ion-item>
-    <app-validation-message [control]="form.get('date')" [submitted]="formSubmitted" mode="submitted">
+    <app-validation-message [control]="form.get('time')" [submitted]="formSubmitted" mode="submitted">
     </app-validation-message>
     </ion-item-group>
 
@@ -56,48 +65,8 @@
     </ion-label>
   </ion-item-divider>
 
-  <ion-card *ngIf="!form.invalid">
-    <ion-card-header color="light">
-      <ion-card-subtitle>{{form.get('description').value}}</ion-card-subtitle>
-      <ion-card-title>{{form.get('date').value | momentFormat:'LLL'}}</ion-card-title>
-    </ion-card-header>
-    <ion-grid>
-      <ion-card-content>
-        <ion-row color="secondary">
-          <ion-col>
-            <ion-item>
-              <ion-label>{{form.get('date').value | momentFromNow:'years'}}</ion-label>
-              <ion-note>Anos</ion-note>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label>{{form.get('date').value | momentFromNow:'months'}}</ion-label>
-              <ion-note>Meses</ion-note>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label>{{form.get('date').value | momentFromNow:'days'}}</ion-label>
-              <ion-note>Dias</ion-note>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label>{{form.get('date').value | momentFromNow:'hours'}}</ion-label>
-              <ion-note>Horas</ion-note>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label>{{form.get('date').value | momentFromNow:'minutes'}}</ion-label>
-              <ion-note>Minutos</ion-note>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
+  <app-memorable-card *ngIf="!form.invalid" headerColor="light" [memorableTime]="preview">
 
-    </ion-grid>
-  </ion-card>
+</app-memorable-card>
 
 </ion-content>
