@@ -5,11 +5,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { ValidationMessageComponent } from './component/validation-message/validation-message.component';
+import { MemorableCardComponent } from './component/memorable-card/memorable-card.component';
 
 
 
 @NgModule({
-  declarations: [ValidationMessageComponent],
+  declarations: [ValidationMessageComponent, MemorableCardComponent],
   imports: [
     CommonModule,
     IonicModule,
@@ -28,7 +29,8 @@ driverOrder: ['indexeddb', 'sqlite', 'websql']
     ReactiveFormsModule,
     CoreModule,
     IonicStorageModule,
-    ValidationMessageComponent
+    ValidationMessageComponent,
+    MemorableCardComponent
   ]
 })
 export class SharedModule { }

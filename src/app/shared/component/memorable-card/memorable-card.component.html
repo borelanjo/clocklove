@@ -1,0 +1,56 @@
+<ion-card (press)="onHold()"> 
+    <ion-card-header [color]="headerColor"  (click)="expandDetail()">
+      <ion-card-subtitle>
+          <ion-button color="dark" fill="clear" size="small">
+              <ion-icon name="arrow-dropdown" slot="icon-only" *ngIf="!showDetail"></ion-icon>
+              <ion-icon name="arrow-dropup"   slot="icon-only" *ngIf="showDetail"> </ion-icon>
+            </ion-button>
+        {{memorableTime.description}}</ion-card-subtitle>
+      <ion-card-title>{{memorableTime.date | momentFormat:'LLL'}}</ion-card-title>
+    </ion-card-header>
+    <ion-grid *ngIf="showDetail" >
+      <ion-card-content >
+        <ion-row color="secondary">
+          <ion-col *ngIf="memorableTime.date | momentFromNow:'years'">
+            <ion-item>
+              <ion-label>{{memorableTime.date | momentFromNow:'years'}}</ion-label>
+              <ion-note>Anos</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="memorableTime.date | momentFromNow:'months'">
+            <ion-item>
+              <ion-label>{{memorableTime.date | momentFromNow:'months'}}</ion-label>
+              <ion-note>Meses</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="memorableTime.date | momentFromNow:'days'">
+            <ion-item>
+              <ion-label>{{memorableTime.date | momentFromNow:'days'}}</ion-label>
+              <ion-note>Dias</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="memorableTime.date | momentFromNow:'hours'">
+            <ion-item>
+              <ion-label>{{memorableTime.date | momentFromNow:'hours'}}</ion-label>
+              <ion-note>Horas</ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="memorableTime.date | momentFromNow:'minutes'">
+            <ion-item>
+              <ion-label>{{memorableTime.date | momentFromNow:'minutes'}}</ion-label>
+              <ion-note>Minutos</ion-note>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="memorableTime.date | momentFromNow:'seconds'">
+              <ion-item>
+                <ion-label>{{memorableTime.date | momentFromNow:'seconds'}}</ion-label>
+                <ion-note>Segundos</ion-note>
+              </ion-item>
+            </ion-col>
+        </ion-row>
+      </ion-card-content>
+      
+    </ion-grid>
+    <ion-reorder slot="end"></ion-reorder>
+  </ion-card>
