@@ -31,6 +31,7 @@
     "@ionic/storage": "^2.2.0",
     "@swimlane/ngx-datatable": "^16.0.2",
     "angular-long-press": "^0.3.2",
+    "br-mask": "0.0.8",
     "cordova-sqlite-storage": "^3.4.1",
     "core-js": "^3.4.7",
     "hammerjs": "^2.0.8",

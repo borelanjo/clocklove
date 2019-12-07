@@ -50,6 +50,7 @@ export class MemorableTimeRegistrationPage implements OnInit {
     const body = `${this._form.get('description').value} ${this._form.get('action').value} ${fromNow.transform(this.dateTime, 'message')}`;
 
     this.preview = new MemorableTime().deserializeFromForm(this._form);
+    this.preview.date = this.dateTime;
 
     return body;
   }

@@ -34,27 +34,27 @@ export class MomentFromNowPipe implements PipeTransform {
     let message = '';
 
     if (years > 0) {
-      message += `${years} anos,`;
+      message += `${years} anos`;
     }
 
     if (months) {
-      message += `${months} meses,`;
+      message += (message ? ', ' : '') + `${months} meses`;
     }
 
     if (days) {
-      message += `${days} dias,`;
+      message += (message ? ', ' : '') + `${days} dias`;
     }
 
     if (hours) {
-      message += `${hours} horas,`;
+      message += (message ? ', ' : '') + `${hours} horas`;
     }
 
     if (minutes) {
-      message += `${minutes} minutos,`;
+      message += (message ? ', ' : '') + `${minutes} minutos`;
     }
 
     if (seconds) {
-      message += `${seconds} segundos.`;
+      message += (message ? 'e ' : '') + `${seconds} segundos`;
     }
 
     return message;
