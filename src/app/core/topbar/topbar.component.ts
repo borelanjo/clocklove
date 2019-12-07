@@ -12,9 +12,11 @@ export class TopbarComponent implements OnInit {
   @Input() showSave = false;
   @Input() showEdit = false;
   @Input() showDelete = false;
+  @Input() showShare = false;
   @Output() save: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
+  @Output() share: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -30,6 +32,10 @@ export class TopbarComponent implements OnInit {
 
   onDelete() {
     this.delete.emit();
+  }
+
+  onShare() {
+    this.share.emit();
   }
 
 }
