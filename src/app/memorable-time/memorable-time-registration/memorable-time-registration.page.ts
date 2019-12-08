@@ -47,7 +47,7 @@ export class MemorableTimeRegistrationPage implements OnInit {
   public sharePreview(): string {
     this.dateTime = moment(moment(this._form.get('date').value).format('YYYY-MM-DD') + ' ' + moment(this._form.get('time').value).format('HH:mm')).toDate();
     const fromNow = new MomentFromNowPipe();
-    const body = `${this._form.get('description').value} ${this._form.get('action').value} ${fromNow.transform(this.dateTime, 'message')}`;
+    const body = `${this._form.get('action').value} ${fromNow.transform(this.dateTime, 'message')}`;
 
     this.preview = new MemorableTime().deserializeFromForm(this._form);
     this.preview.date = this.dateTime;

@@ -54,7 +54,7 @@ export class MomentFromNowPipe implements PipeTransform {
     }
 
     if (seconds) {
-      message += (message ? 'e ' : '') + `${seconds} segundos`;
+      message += (message ? ' e ' : '') + `${seconds} segundos`;
     }
 
     return message;

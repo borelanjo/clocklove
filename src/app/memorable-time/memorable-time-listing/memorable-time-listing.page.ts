@@ -78,7 +78,7 @@ export class MemorableTimeListingPage implements OnInit {
 
   async share() {
     const fromNow = new MomentFromNowPipe();
-    const body = `${this.memorableSelected.description} ${this.memorableSelected.action} ${fromNow.transform(this.memorableSelected.date, 'message')}`;
+    const body = `${this.memorableSelected.action} ${fromNow.transform(this.memorableSelected.date, 'message')}`;
     console.log(body);
 
     await Share.share({
