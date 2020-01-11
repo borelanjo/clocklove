@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MemorableTimeService } from '../shared/memorable-time.service';
 import { MemorableTime } from '../shared/memorable-time.model';
 import { MemorableTimeForm } from '../shared/memorable-time.form';
-import { MomentFromNowPipe } from 'src/app/core/shared/pipe/moment-from-now.pipe';
+import { MomentFromNowPipe } from 'src/app/shared/pipe/moment-from-now.pipe';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 

@@ -5,7 +5,7 @@ const { Share } = Plugins;
 import { MemorableTimeService } from '../shared/memorable-time.service';
 import { MemorableTime } from '../shared/memorable-time.model';
 
-import { MomentFromNowPipe } from 'src/app/core/shared/pipe/moment-from-now.pipe';
+import { MomentFromNowPipe } from 'src/app/shared/pipe/moment-from-now.pipe';
 
 @Component({
   selector: 'app-memorable-time-listing',
