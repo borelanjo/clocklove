@@ -1,0 +1,9 @@
+android
+e2e
+www
+dist
+node_modules
+build
+.dockerignore
+Dockerfile
+Dockerfile.prod
