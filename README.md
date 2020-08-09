@@ -1,6 +1,7 @@
 <a href="https://gitmoji.carloscuesta.me">
   <img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square" alt="Gitmoji">
 </a>
+
 # Informações sobre a imagem do Clock Love no DockerHub
 
 A imagem está disponível na URL a seguir.
@@ -14,7 +15,7 @@ O Clock Love é uma aplicação Ionic
 * Baixe a imagem do DockerHub:
 
 ```sh
-docker pull borelanjo/clocklove:1.0.0
+docker pull borelanjo/clocklove:1.1.0
 ```
 
 * Crie um conteiner com uma das formas abaixo.
@@ -22,13 +23,13 @@ docker pull borelanjo/clocklove:1.0.0
 a) Conteiner em background:
 
 ```sh
-docker run -d --name=clocklove -p 80:80 borelanjo/clocklove:1.0.0
+docker run -d --name=clocklove -p 80:80 borelanjo/clocklove:1.1.0
 ```
 
 Caso deseje executar em outra porta:
 
 ```sh
-docker run -d --name=clocklove -p [portapreferencia]:80 borelanjo/clocklove:1.0.0
+docker run -d --name=clocklove -p [portapreferencia]:80 borelanjo/clocklove:1.1.0
 ```
 
 b) Acesse a aplicação:
@@ -55,5 +56,5 @@ git clone git@github.com:borelanjo/clocklove.git
 
 ```sh
 cd clocklove
-docker build --pull --rm -f -t borelanjo/clocklove:1.0.0 "."
+docker build --pull --rm -t borelanjo/clocklove:1.1.0 "."
 ```
